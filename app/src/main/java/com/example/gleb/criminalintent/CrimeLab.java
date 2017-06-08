@@ -7,12 +7,20 @@ import java.util.List;
 import java.util.UUID;
 
 /**
+ * Синглетный класс существующийс только в одном экземпляре
  * Created by Gleb on 06.06.2017.
  */
 
 public class CrimeLab {
     private static CrimeLab sCrimeLab;
     private List<Crime> mCrimes;
+
+    /**
+     * Возвращает единственный экземпляр класса
+     * или если не был создан - создает через закрытый конструктор
+     * @param context
+     * @return
+     */
     public static CrimeLab get(Context context) {
         if (sCrimeLab == null) {
             sCrimeLab = new CrimeLab(context);

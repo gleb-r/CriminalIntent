@@ -26,14 +26,18 @@ import android.widget.EditText;
 import java.util.Date;
 import java.util.UUID;
 
-
+/**
+ *
+ */
 public class CrimeFragment extends Fragment {
     private Crime mCrime;
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
+    private Button mTimeButton;
     private static final String ARG_CRIME_ID = "crime_id";
     private static final String DIALOG_DATE = "DiaogDate";
+    private static final String DIALOG_TIME = "DialogTime";
     private static final int REQUEST_DATE = 0;
 
     public static CrimeFragment newInstance(UUID crimeId) {
@@ -84,8 +88,19 @@ public class CrimeFragment extends Fragment {
                 dialog.setTargetFragment(CrimeFragment.this,REQUEST_DATE);
                 dialog.show(manager,DIALOG_DATE);
             }
-        });
 
+        });
+        mTimeButton = (Button)view.findViewById(R.id.crime_time);
+        mTimeButton.setText(DateFormat.format("HH:mm:ss",mCrime.getDate()).toString());
+        mTimeButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getFragmentManager();
+                TimePickerFragment timePickerDialog = new TimePickerFragment();
+                timePickerDialog.show(fm,DIALOG_TIME);
+
+            }
+        });
         mSolvedCheckBox = (CheckBox)view.findViewById(R.id.clime_solved);
         mSolvedCheckBox.setChecked(mCrime.isSolved());
         mSolvedCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
